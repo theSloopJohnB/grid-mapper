@@ -12,15 +12,14 @@ class Room:
         A room is considered valid if all edges are horizontal and vertical lines
         """
         for edge in self.get_edges():
-            if not edge.is_vertical() or not edge.is_horizontal():
-                raise RuntimeException("Room invalid")
-        print ('valid')
+            if not edge.is_vertical() and not edge.is_horizontal():
+                raise RuntimeError("Room invalid")
 
     def get_edges(self):
         edges = []
         for index in range(0, len(self.points) - 1):
             edges.append(Edge(self.points[index], self.points[index + 1]))
-        edges.append(Edge(self.points[0], self.points[-1]))
+        edges.append(Edge(self.points[-1], self.points[0]))
         return edges
 
 
@@ -29,14 +28,27 @@ class Edge:
         self.start = start
         self.end = end
 
+    def __repr__(self):
+        return 'Edge({}, {})'.format(repr(self.start), repr(self.end))
+
+    def __eq__(self, other):
+        return self.start == other.start and self.end == other.end
+
     def is_vertical(self):
-        return self.start.x == self.start.x
+        return self.start.x == self.end.x
         
     def is_horizontal(self):
-        return self.start.y == self.start.y
+        return self.start.y == self.end.y
         
 
 class Point:
     def __init__(self, x, y):
         self.x = x
         self.y = y
+
+    def __repr__(self):
+        return 'Point({}, {})'.format(self.x, self.y)
+
+    def __eq__(self, other):
+        return self.x == other.x and self.y == other.y
+
