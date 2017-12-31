@@ -1,5 +1,5 @@
 from nose.tools import *
-from house import *
+from room import *
 
 
 def valid_room_test():
