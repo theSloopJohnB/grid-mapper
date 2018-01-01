@@ -1,4 +1,5 @@
 from ..model.house import House
+from ..model.point import Point
 
 class Grid():
     def __init__(self):
@@ -15,3 +16,12 @@ class Grid():
     def add_room(self, room):
         self.house.add_room(room)
 
+    def logical_repr(self):
+        grid = []
+        for row in self.rows:
+            grid_row = []
+            for col in self.columns:
+                grid_row.append(self.house.room_at_point(Point(col, row)))
+
+            grid.append(grid_row)
+        return grid

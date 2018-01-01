@@ -32,3 +32,10 @@ class House:
                 edges.append(edge)
 
         return edges
+
+    def room_at_point(self, point):
+        for i in range(0, len(self.rooms)):
+            if self.rooms[i].contains_point(point):
+                return i
+
+        return -1

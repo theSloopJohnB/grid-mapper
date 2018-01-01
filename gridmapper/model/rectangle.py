@@ -76,7 +76,7 @@ class Rectangle:
 
         return False
 
-    def inside(self, point):
+    def inside(self, point, include_edges=False):
         """
         Returns whether point is inside of this rectangle.
         """
@@ -91,7 +91,7 @@ class Rectangle:
         edges = self.edges
         for edge in edges:
             if edge.is_inside(point):
-                return False
+                return include_edges
             elif edge.is_above(point):
                 side_checker['above'] += 1
             elif edge.is_below(point):

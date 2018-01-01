@@ -53,3 +53,23 @@ def columns_rows_test():
 
     assert grid.rows == [0, 2, 4]
     assert grid.columns == [0, 1, 2, 3, 4]
+
+def logical_grid_test():
+    rects = get_rectangles()
+    room1 = Room()
+    room1.add_rectangle(rects[0])
+    room1.add_rectangle(rects[1])
+    room2 = Room()
+    room2.add_rectangle(rects[2])
+
+    grid = Grid()
+    grid.add_room(room1)
+    grid.add_room(room2)
+    s = grid.logical_repr()
+    expected = [
+        [ 0,  0,  0,  0,  0],
+        [ 0,  0,  0,  0,  0],
+        [-1,  1,  1,  1, -1],
+    ]
+    assert s == expected
+

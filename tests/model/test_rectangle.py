@@ -104,6 +104,28 @@ def inside_test_rect_rect():
     assert not rect1.inside(Point(15, 5))
     assert not rect1.inside(Point(5, 15))
 
+def inside_test_with_edges_rect():
+    rect1_points = [
+        Point(0, 0),
+        Point(10, 0),
+        Point(10, 10),
+        Point(0, 10),
+    ]
+    rect1 = Rectangle(rect1_points)
+    assert rect1.inside(Point(5, 5), include_edges=True)
+
+    # On the edges
+    assert rect1.inside(Point(0, 5), include_edges=True)
+    assert rect1.inside(Point(10, 5), include_edges=True)
+    assert rect1.inside(Point(5, 0), include_edges=True)
+    assert rect1.inside(Point(5, 10), include_edges=True)
+
+    # Outside the edges
+    assert not rect1.inside(Point(-5, 5), include_edges=True)
+    assert not rect1.inside(Point(5, -5), include_edges=True)
+    assert not rect1.inside(Point(15, 5), include_edges=True)
+    assert not rect1.inside(Point(5, 15), include_edges=True)
+
 
 def get_rectangles():
     """

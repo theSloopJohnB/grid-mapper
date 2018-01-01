@@ -38,3 +38,10 @@ class Room:
                     return True
 
         return False
+
+    def contains_point(self, point):
+        for rect in self.rectangles:
+            if rect.inside(point, include_edges=True):
+                return True
+
+        return False
