@@ -90,5 +90,55 @@ def invalid_house_test():
     house.add_room(room2)
     house.add_room(room3)
 
+def get_rectangles_test():
+    rect1, rect2, rect3, rect4, rect5 = get_rectangles()
 
+    house = House()
+    room1 = Room()
+    room1.add_rectangle(rect2)
+    room1.add_rectangle(rect3)
+    room2 = Room()
+    room2.add_rectangle(rect4)
+
+    house.add_room(room1)
+    house.add_room(room2)
+
+    a = house.rectangles
+    b = [rect2, rect3, rect4]
+    assert equal_ignore_order(a, b)
+
+
+def get_edges_test():
+    rect1, rect2, rect3, rect4, rect5 = get_rectangles()
+
+    house = House()
+    room1 = Room()
+    room1.add_rectangle(rect2)
+    room1.add_rectangle(rect3)
+    room2 = Room()
+    room2.add_rectangle(rect4)
+
+    house.add_room(room1)
+    house.add_room(room2)
+
+    a = house.edges
+    b = [rect2, rect3, rect4]
+    bEdges = []
+
+    for rectB in b:
+        for edgeB in rectB.edges:
+            bEdges.append(edgeB)
+
+    assert equal_ignore_order(a, bEdges)
+
+
+def equal_ignore_order(a, b):
+    """ Use only when elements are neither hashable nor sortable! """
+    unmatched = list(b)
+    for element in a:
+        try:
+            unmatched.remove(element)
+        except ValueError:
+            return False
+    return not unmatched
 

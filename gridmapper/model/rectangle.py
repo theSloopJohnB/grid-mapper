@@ -7,6 +7,18 @@ class Rectangle:
         self.points = points
         self._validate()
 
+    def __repr__(self):
+        return 'Rectangle({})'.format(repr(self.points))
+
+    def __eq__(self, other):
+        point_tracker = {point: False for point in self.points}
+        for point in other.points:
+            point_tracker[point] = True
+
+        # If all true, rectangles must be the same
+        return not False in point_tracker.values()
+
+
     def _validate(self):
         """
         A room is considered valid if
@@ -20,15 +32,16 @@ class Rectangle:
 
         # TODO: Add some more rectangle validation
 
-        for edge in self.get_edges():
+        for edge in self.edges:
             if not edge.is_vertical() and not edge.is_horizontal():
                 raise RuntimeError("Room invalid: All edges must be horizontal or vertical")
 
-        for edge1, edge2 in itertools.combinations(self.get_edges(), 2):
+        for edge1, edge2 in itertools.combinations(self.edges, 2):
             if edge1.shares_space(edge2):
                 raise RuntimeError("Room invalid: No edges can share space")
 
-    def get_edges(self):
+    @property
+    def edges(self):
         edges = []
         for index in range(0, len(self.points) - 1):
             edges.append(Edge(self.points[index], self.points[index + 1]))
@@ -44,7 +57,7 @@ class Rectangle:
         if False not in my_points.values():
             return True
 
-        for edge in other.get_edges():
+        for edge in other.edges:
             for point in edge.get_points():
                 if self.inside(point):
                     return True
@@ -56,8 +69,8 @@ class Rectangle:
         if self.intersects(other):
             return False
 
-        for edge_self in self.get_edges():
-            for edge_other in other.get_edges():
+        for edge_self in self.edges:
+            for edge_other in other.edges:
                 if edge_self.shares_space(edge_other):
                     return True
 
@@ -75,7 +88,7 @@ class Rectangle:
            'right': 0,
         }
 
-        edges = self.get_edges()
+        edges = self.edges
         for edge in edges:
             if edge.is_inside(point):
                 return False

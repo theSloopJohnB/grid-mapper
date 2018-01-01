@@ -2,7 +2,34 @@ from nose.tools import *
 from gridmapper.model.rectangle import *
 
 
-def valid_room_test():
+def eq_rect_test():
+    rect1_points = [
+        Point(0, 0),
+        Point(50, 0),
+        Point(50, 50),
+        Point(0, 50),
+    ]
+    rect2_points = [
+        Point(0, 50),
+        Point(50, 50),
+        Point(50, 0),
+        Point(0, 0),
+    ]
+    rect3_points = [
+        Point(0, 0),
+        Point(10, 0),
+        Point(10, 10),
+        Point(0, 10),
+    ]
+    rect1 = Rectangle(rect1_points)
+    rect2 = Rectangle(rect2_points)
+    rect3 = Rectangle(rect3_points)
+    assert rect1 == rect2
+    assert rect1 != rect3
+    assert rect2 != rect3
+
+
+def valid_rect_test():
     rect1_points = [
         Point(0, 0),
         Point(50, 0),
@@ -14,7 +41,7 @@ def valid_room_test():
 
 
 @raises(RuntimeError)
-def invalid_room_test():
+def invalid_rect_test():
     rect1_points = [
         Point(0, 0),
         Point(50, 0),
@@ -24,8 +51,8 @@ def invalid_room_test():
 
 
 @raises(RuntimeError)
-def same_space_room_test():
-    # This room traces back on itself accidentally and should be invalid
+def same_space_rect_test():
+    # This rect traces back on itself accidentally and should be invalid
     rect1_points = [
         Point(0, 0),
         Point(10, 0),
@@ -43,7 +70,7 @@ def edge_test_1():
         Point(0, 50),
     ]
     rect1 = Rectangle(rect1_points)
-    edges = rect1.get_edges()
+    edges = rect1.edges
 
     expected = [
         Edge(Point(0, 0), Point(50, 0)),
@@ -55,7 +82,7 @@ def edge_test_1():
     assert edges == expected
 
 
-def inside_test_rect_room():
+def inside_test_rect_rect():
     rect1_points = [
         Point(0, 0),
         Point(10, 0),
@@ -78,85 +105,9 @@ def inside_test_rect_room():
     assert not rect1.inside(Point(5, 15))
 
 
-# def inside_test_L_room():
-#     """
-#     Shaped like:
-#      01234
-#     0###
-#     1# #
-#     2# ###
-#     3#   #
-#     4#####
-#     """
-#     rect1_points = [
-#         Point(0, 0),
-#         Point(2, 0),
-#         Point(2, 2),
-#         Point(4, 2),
-#         Point(4, 4),
-#         Point(0, 4),
-#     ]
-#     rect1 = Rectangle(rect1_points)
-#     assert rect1.inside(Point(1, 1))
-#     assert rect1.inside(Point(1, 2))
-#     assert rect1.inside(Point(1, 3))
-#     assert rect1.inside(Point(3, 3))
-#
-#     # On the edges
-#     assert not rect1.inside(Point(0, 0))
-#     assert not rect1.inside(Point(2, 2))
-#     assert not rect1.inside(Point(4, 2))
-#     assert not rect1.inside(Point(4, 4))
-#
-#     # Outside the edges
-#     assert not rect1.inside(Point(3, 1))
-#
-#
-# def inside_test_u_room():
-#     """
-#     Shaped like:
-#      0123456
-#     0### ###
-#     1# # # #
-#     2# ### #
-#     3#     #
-#     4#######
-#     """
-#     rect1_points = [
-#         Point(0, 0),
-#         Point(2, 0),
-#         Point(2, 2),
-#         Point(4, 2),
-#         Point(4, 0),
-#         Point(6, 0),
-#         Point(6, 4),
-#         Point(0, 4),
-#     ]
-#     rect1 = Rectangle(rect1_points)
-#
-#     assert rect1.inside(Point(1, 1))
-#     assert rect1.inside(Point(1, 2))
-#     assert rect1.inside(Point(1, 3))
-#     assert rect1.inside(Point(2, 3))
-#     assert rect1.inside(Point(3, 3))
-#     assert rect1.inside(Point(4, 3))
-#     assert rect1.inside(Point(5, 3))
-#     assert rect1.inside(Point(5, 2))
-#     assert rect1.inside(Point(5, 1))
-#
-#     assert not rect1.inside(Point(3, 1))
-#     assert not rect1.inside(Point(-1, 1))
-#     assert not rect1.inside(Point(1, -1))
-#     assert not rect1.inside(Point(3, -1))
-#     assert not rect1.inside(Point(3, 5))
-#     assert not rect1.inside(Point(7, 1))
-#     assert not rect1.inside(Point(7, 3))
-#
-#
-
 def get_rectangles():
     """
-    rect1          rect2         room3
+    rect1          rect2         rect3
     Shaped like    Shaped like   Shaped like
      01234          01234         01234
     0              0  ###        0###
@@ -164,7 +115,7 @@ def get_rectangles():
     2# #           2  ###        2###
     3###           3             3
 
-    room4          room5
+    rect4          rect5
     Shaped like    Shaped like
      01234          01234
     0              0

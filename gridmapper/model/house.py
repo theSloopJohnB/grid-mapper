@@ -15,3 +15,20 @@ class House:
         for room1, room2 in itertools.combinations(self.rooms, 2):
             if room1.is_intersection(room2):
                 raise RuntimeError("House invalid: No rooms can share space")
+
+    @property
+    def rectangles(self):
+        rects = []
+        for room in self.rooms:
+            for rect in room.rectangles:
+                rects.append(rect)
+        return rects
+
+    @property
+    def edges(self):
+        edges = []
+        for rect in self.rectangles:
+            for edge in rect.edges:
+                edges.append(edge)
+
+        return edges
