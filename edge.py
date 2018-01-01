@@ -9,7 +9,8 @@ class Edge:
         return 'Edge({}, {})'.format(repr(self.start), repr(self.end))
 
     def __eq__(self, other):
-        return self.start == other.start and self.end == other.end
+        return (self.start == other.start and self.end == other.end or
+                self.start == other.end and self.end == other.start)
 
     def get_points(self):
         if self.is_vertical():

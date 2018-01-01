@@ -36,7 +36,14 @@ class Rectangle:
         return edges
 
     def intersects(self, other):
-        """ Return whether this rectangle intersects with other """
+        """ Return whether this rectangle intersects with other. Overlap counts as intersects """
+        my_points = {point: False for point in self.points}
+        for point in other.points:
+            my_points[point] = True
+
+        if False not in my_points.values():
+            return True
+
         for edge in other.get_edges():
             for point in edge.get_points():
                 if self.inside(point):
