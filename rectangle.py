@@ -2,7 +2,7 @@ import itertools
 
 from edge import *
 
-class Room:
+class Rectangle:
     def __init__(self, points):
         self.points = points
         self._validate()
@@ -10,10 +10,16 @@ class Room:
     def _validate(self):
         """
         A room is considered valid if
+        1. Rooms are rectangles
         1. all edges are horizontal and vertical lines
         2. lines don't occupy the same space
         3. TODO: Add criteria to check for intersections - should not be allowed
         """
+        if len(self.points) != 4:
+            raise RuntimeError("Rectangles only")
+
+        # TODO: Add some more rectangle validation
+
         for edge in self.get_edges():
             if not edge.is_vertical() and not edge.is_horizontal():
                 raise RuntimeError("Room invalid: All edges must be horizontal or vertical")
@@ -30,7 +36,7 @@ class Room:
         return edges
 
     def intersects(self, other):
-        """ Return whether this room intersects with other """
+        """ Return whether this rectangle intersects with other """
         for edge in other.get_edges():
             for point in edge.get_points():
                 if self.inside(point):
@@ -40,8 +46,7 @@ class Room:
 
     def inside(self, point):
         """
-        Returns whether point is inside of this room.
-        Uses an algorithm where there must be an odd number of sides in each direction.
+        Returns whether point is inside of this rectangle.
         """
         # check for line above
         side_checker = {
@@ -50,6 +55,7 @@ class Room:
            'left': 0,
            'right': 0,
         }
+
         edges = self.get_edges()
         for edge in edges:
             if edge.is_inside(point):
@@ -64,6 +70,7 @@ class Room:
                 side_checker['right'] += 1
 
         for val in side_checker.values():
-            if val % 2 == 0:
+            if val != 1:
                 return False
+
         return True

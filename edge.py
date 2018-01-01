@@ -57,6 +57,12 @@ class Edge:
         """ If the point is somewhere on the line """
         return self.is_between_x(point) and self.is_between_y(point)
 
+    def shares_horiz_bounds(self, point):
+        return self.is_horizontal() and (point.x == self.start.x or point.x == self.end.x)
+
+    def shares_vert_bounds(self, point):
+        return self.is_vertical() and (point.y == self.start.y or point.y == self.end.y)
+
     def shares_space(self, other):
         """ Whether this and other share space. Assumes horizontal and vertical lines only """
         if self.is_vertical():

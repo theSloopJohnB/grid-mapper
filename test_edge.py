@@ -205,3 +205,36 @@ def get_points_test():
     ]
     assert edge2_points == expected2
 
+def shares_horiz_bounds_test():
+    edge1 = Edge(Point(0, 0), Point(2, 0))
+
+    assert edge1.shares_horiz_bounds(Point(0, 1))
+    assert edge1.shares_horiz_bounds(Point(0, -1))
+    assert edge1.shares_horiz_bounds(Point(0, 0))
+    assert edge1.shares_horiz_bounds(Point(2, 1))
+    assert edge1.shares_horiz_bounds(Point(2, -1))
+    assert edge1.shares_horiz_bounds(Point(2, 0))
+
+    assert not edge1.shares_horiz_bounds(Point(3, 0))
+    assert not edge1.shares_horiz_bounds(Point(3, 1))
+    assert not edge1.shares_horiz_bounds(Point(3, -1))
+    assert not edge1.shares_horiz_bounds(Point(1, 0))
+    assert not edge1.shares_horiz_bounds(Point(1, 1))
+    assert not edge1.shares_horiz_bounds(Point(1, -1))
+
+def shares_vert_bounds_test():
+    edge1 = Edge(Point(0, 0), Point(0, 2))
+
+    assert edge1.shares_vert_bounds(Point(1, 0))
+    assert edge1.shares_vert_bounds(Point(-1, 0))
+    assert edge1.shares_vert_bounds(Point(0, 0))
+    assert edge1.shares_vert_bounds(Point(1, 2))
+    assert edge1.shares_vert_bounds(Point(-1, 2))
+    assert edge1.shares_vert_bounds(Point(0, 2))
+
+    assert not edge1.shares_vert_bounds(Point(0, 3))
+    assert not edge1.shares_vert_bounds(Point(1, 3))
+    assert not edge1.shares_vert_bounds(Point(-1, 3))
+    assert not edge1.shares_vert_bounds(Point(0, 1))
+    assert not edge1.shares_vert_bounds(Point(1, 1))
+    assert not edge1.shares_vert_bounds(Point(-1, 1))
