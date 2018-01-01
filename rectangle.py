@@ -44,6 +44,18 @@ class Rectangle:
 
         return False
 
+    def conjoins(self, other):
+        """ Whether this and another rectangle share any sides. Corners don't count """
+        if self.intersects(other):
+            return False
+
+        for edge_self in self.get_edges():
+            for edge_other in other.get_edges():
+                if edge_self.shares_space(edge_other):
+                    return True
+
+        return False
+
     def inside(self, point):
         """
         Returns whether point is inside of this rectangle.

@@ -153,7 +153,8 @@ def inside_test_rect_room():
 #     assert not rect1.inside(Point(7, 3))
 #
 #
-def test_intersects():
+
+def get_rectangles():
     """
     rect1          rect2         room3
     Shaped like    Shaped like   Shaped like
@@ -163,14 +164,15 @@ def test_intersects():
     2# #           2  ###        2###
     3###           3             3
 
-    room4
-    Shaped like
-     01234
-    0
-    1
-    2 ###
-    3 # #
-    4 ###
+    room4          room5
+    Shaped like    Shaped like
+     01234          01234
+    0              0
+    1              1
+    2 ###          2
+    3 # #          3 ###
+    4 ###          4 # #
+                   5 ###
     """
     rect1_points = [
         Point(0, 1),
@@ -204,13 +206,46 @@ def test_intersects():
     ]
     rect4 = Rectangle(rect4_points)
 
+    rect5_points = [
+        Point(1,3),
+        Point(3,3),
+        Point(3,5),
+        Point(1,5),
+    ]
+    rect5 = Rectangle(rect5_points)
+    return [rect1, rect2, rect3, rect4, rect5]
+
+
+def test_intersects():
+    rect1, rect2, rect3, rect4, rect5 = get_rectangles()
+
     assert not rect1.intersects(rect2)
     assert rect1.intersects(rect3)
     assert rect1.intersects(rect4)
+    assert not rect1.intersects(rect5)
 
     assert not rect2.intersects(rect3)
-    assert not rect2.intersects(rect3)
+    assert not rect2.intersects(rect4)
+    assert not rect2.intersects(rect5)
 
     assert not rect3.intersects(rect4)
+    assert not rect3.intersects(rect5)
 
+    assert rect4.intersects(rect5)
 
+def test_conjoins():
+    rect1, rect2, rect3, rect4, rect5 = get_rectangles()
+
+    assert rect1.conjoins(rect2)
+    assert not rect1.conjoins(rect3)
+    assert not rect1.conjoins(rect4)
+    assert rect1.conjoins(rect5)
+
+    assert rect2.conjoins(rect3)
+    assert rect2.conjoins(rect4)
+    assert not rect2.conjoins(rect5)
+
+    assert rect3.conjoins(rect4)
+    assert not rect3.conjoins(rect5)
+
+    assert not rect4.conjoins(rect5)
