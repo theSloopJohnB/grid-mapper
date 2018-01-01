@@ -153,55 +153,64 @@ def inside_test_rect_room():
 #     assert not rect1.inside(Point(7, 3))
 #
 #
-# def test_intersects():
-#     """
-#     rect1          rect2         room3
-#     Shaped like:   Shaped like   Shaped like
-#      01234          01234         01234
-#     0###           0  ###        0###
-#     1# #           1  # #        1# #
-#     2# ###         2  ###        2###
-#     3#   #         3             3
-#     4#####         4             4
-#
-#
-#     room4          room5
-#     Shaped like    Shaped like
-#      01234          01234
-#     0              0
-#     1 ###          1###
-#     2 # #          2# #
-#     3 ###          3###
-#     """
-#     rect1_points = [
-#         Point(0, 0),
-#         Point(2, 0),
-#         Point(2, 2),
-#         Point(4, 2),
-#         Point(4, 4),
-#         Point(0, 4),
-#     ]
-#     rect1 = Rectangle(rect1_points)
-#
-#     rect2_points = [
-#         Point(2, 0),
-#         Point(4, 0),
-#         Point(4, 2),
-#         Point(2, 2),
-#     ]
-#     rect2 = Rectangle(rect2_points)
-#
-#     room3_points = [
-#         Point(0,0),
-#         Point(2,0),
-#         Point(2,2),
-#         Point(0,2),
-#     ]
-#     room3 = Rectangle(room3_points)
-#
-#     assert not rect1.intersects(rect2)
-#     assert rect1.intersects(room3)
-#
-#     assert not rect2.intersects(room3)
-#
+def test_intersects():
+    """
+    rect1          rect2         room3
+    Shaped like    Shaped like   Shaped like
+     01234          01234         01234
+    0              0  ###        0###
+    1###           1  # #        1# #
+    2# #           2  ###        2###
+    3###           3             3
+
+    room4
+    Shaped like
+     01234
+    0
+    1
+    2 ###
+    3 # #
+    4 ###
+    """
+    rect1_points = [
+        Point(0, 1),
+        Point(2, 1),
+        Point(2, 3),
+        Point(0, 3),
+    ]
+    rect1 = Rectangle(rect1_points)
+
+    rect2_points = [
+        Point(2, 0),
+        Point(4, 0),
+        Point(4, 2),
+        Point(2, 2),
+    ]
+    rect2 = Rectangle(rect2_points)
+
+    rect3_points = [
+        Point(0,0),
+        Point(2,0),
+        Point(2,2),
+        Point(0,2),
+    ]
+    rect3 = Rectangle(rect3_points)
+
+    rect4_points = [
+        Point(1,2),
+        Point(3,2),
+        Point(3,4),
+        Point(1,4),
+    ]
+    rect4 = Rectangle(rect4_points)
+
+    assert not rect1.intersects(rect2)
+    assert rect1.intersects(rect3)
+    assert rect1.intersects(rect4)
+
+    assert not rect2.intersects(rect3)
+    assert not rect2.intersects(rect3)
+
+    assert not rect3.intersects(rect4)
+
 
