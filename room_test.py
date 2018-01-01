@@ -4,7 +4,7 @@ from nose.tools import *
 
 def get_rectangles():
     """
-    rect1          rect2         room3
+    rect1          rect2         rect3
     Shaped like    Shaped like   Shaped like
      01234          01234         01234
     0              0  ###        0###
@@ -12,7 +12,7 @@ def get_rectangles():
     2# #           2  ###        2###
     3###           3             3
 
-    room4          room5
+    rect4          rect5
     Shaped like    Shaped like
      01234          01234
     0              0
@@ -64,6 +64,26 @@ def get_rectangles():
     return [rect1, rect2, rect3, rect4, rect5]
 
 
+def room_intersect_conjoin_test():
+    rect1, rect2, rect3, rect4, rect5 = get_rectangles()
+
+    room1 = Room()
+    room1.add_rectangle(rect2)
+    room1.add_rectangle(rect3)
+    room2 = Room()
+    room2.add_rectangle(rect4)
+    room3 = Room()
+    room3.add_rectangle(rect5)
+
+    assert room1.is_conjoined(room2)
+    assert not room1.is_conjoined(room3)
+    assert not room2.is_conjoined(room3)
+
+    assert not room1.is_intersection(room2)
+    assert not room1.is_intersection(room3)
+    assert room2.is_intersection(room3)
+
+
 def add_rect_good_test():
     room = Room()
     rect1, rect2, _, _, _ = get_rectangles()
@@ -85,6 +105,5 @@ def add_rect_intersect_test():
     rect1, _, _, rect4, _ = get_rectangles()
     room.add_rectangle(rect1)
     room.add_rectangle(rect4)
-
 
 

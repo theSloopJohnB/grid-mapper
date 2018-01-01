@@ -23,9 +23,18 @@ class Room:
 
         return conjoined
 
-    # def is_conjoined(self, other):
-    #     conjoined = False
-    #     for rect in self.rectangles:
-    #         for other_rect in other.rectangles:
-    #             if rect.conjoins(other_rect):
-    #                 return false
+    def is_conjoined(self, other):
+        for rect in self.rectangles:
+            for other_rect in other.rectangles:
+                if rect.conjoins(other_rect):
+                    return True
+
+        return False
+
+    def is_intersection(self, other):
+        for rect in self.rectangles:
+            for other_rect in other.rectangles:
+                if rect.intersects(other_rect):
+                    return True
+
+        return False
