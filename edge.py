@@ -43,4 +43,41 @@ class Edge:
         """ If the edge is to the right of the point"""
         return self.is_vertical() and self.is_between_y(point) and self.start.x > point.x
 
+    def shares_space(self, other):
+        """ Whether this and other share space. Assumes horizontal and vertical lines only """
+        if self.is_vertical():
+            if not other.is_vertical():
+                return False
 
+            if self.start.x != other.start.x:
+                return False
+
+            # All Ys are below or above all of other's Ys
+            return not ((self.start.y >= other.start.y and
+                    self.start.y >= other.end.y and
+                    self.end.y >= other.start.y and
+                    self.end.y >= other.end.y)
+                    or
+                    (self.start.y <= other.start.y and
+                    self.start.y <= other.end.y and
+                    self.end.y <= other.start.y and
+                    self.end.y <= other.end.y))
+
+        if self.is_horizontal():
+            if not other.is_horizontal():
+                return False
+
+            if self.start.y != other.start.y:
+                return False
+
+            # All Xs are below or above all of other's Ys
+            return not ((self.start.x >= other.start.x and
+                     self.start.x >= other.end.x and
+                     self.end.x >= other.start.x and
+                     self.end.x >= other.end.x)
+                    or
+                    (self.start.x <= other.start.x and
+                     self.start.x <= other.end.x and
+                     self.end.x <= other.start.x and
+                     self.end.x <= other.end.x))
+        return False

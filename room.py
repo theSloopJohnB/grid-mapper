@@ -1,17 +1,26 @@
+import itertools
+
 from edge import *
 
 class Room:
     def __init__(self, points):
         self.points = points
-        self.validate()
+        self._validate()
 
-    def validate(self):
+    def _validate(self):
         """
-        A room is considered valid if all edges are horizontal and vertical lines
+        A room is considered valid if
+        1. all edges are horizontal and vertical lines
+        2. lines don't occupy the same space
+        3. TODO: Add criteria to check for intersections - should not be allowed
         """
         for edge in self.get_edges():
             if not edge.is_vertical() and not edge.is_horizontal():
-                raise RuntimeError("Room invalid")
+                raise RuntimeError("Room invalid: All edges must be horizontal or vertical")
+
+        for edge1, edge2 in itertools.combinations(self.get_edges(), 2):
+            if edge1.shares_space(edge2):
+                raise RuntimeError("Room invalid: No edges can share space")
 
     def get_edges(self):
         edges = []
@@ -23,11 +32,30 @@ class Room:
     # def intersects(self, other):
     #     """ Return whether this room intersects with other """
 
-    # def inside(self, point):
-    #     # check for line above
-    #     for edge in self.get_edges():
-    #
-    #     # check for line below
-    #     # check for line left
-    #     # check for line right
+    def inside(self, point):
+        """
+        Returns whether point is inside of this room.
+        Uses an algorithm where there must be an odd number of sides in each direction.
+        """
+        # check for line above
+        side_checker = {
+           'above': 0,
+           'below': 0,
+           'left': 0,
+           'right': 0,
+        }
+        edges = self.get_edges()
+        for edge in edges:
+            if edge.is_above(point):
+                side_checker['above'] += 1
+            elif edge.is_below(point):
+                side_checker['below'] += 1
+            elif edge.is_left(point):
+                side_checker['left'] += 1
+            elif edge.is_right(point):
+                side_checker['right'] += 1
 
+        for val in side_checker.values():
+            if val % 2 == 0:
+                return False
+        return True
