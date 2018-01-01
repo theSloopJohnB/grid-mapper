@@ -161,3 +161,47 @@ def shares_space_test():
     # Crossing with vertical line
     assert not edge2.shares_space(Edge(Point(0, 0), Point(0, 50)))
 
+def is_inside_test():
+    edge1 = Edge(Point(0, 0), Point(0, 50))
+
+    # Vertical Line
+    assert edge1.is_inside(Point(0, 0))
+    assert edge1.is_inside(Point(0, 25))
+    assert edge1.is_inside(Point(0, 50))
+    assert not edge1.is_inside(Point(0, 51))
+    assert not edge1.is_inside(Point(0, -1))
+    assert not edge1.is_inside(Point(1, 0))
+    assert not edge1.is_inside(Point(-1, 25))
+    assert not edge1.is_inside(Point(2, 50))
+
+    edge2 = Edge(Point(0, 0), Point(50, 0))
+
+    # Horizontal Line
+    assert edge2.is_inside(Point(0, 0))
+    assert edge2.is_inside(Point(25, 0))
+    assert edge2.is_inside(Point(50, 0))
+    assert not edge2.is_inside(Point(51, 0))
+    assert not edge2.is_inside(Point(-1, 0))
+    assert not edge2.is_inside(Point(0, 1))
+    assert not edge2.is_inside(Point(25, -1))
+    assert not edge2.is_inside(Point(50, 1))
+
+def get_points_test():
+    edge1 = Edge(Point(0, 0), Point(0, 2))
+    edge1_points = edge1.get_points()
+    expected1 = [
+        Point(0, 0),
+        Point(0, 1),
+        Point(0, 2),
+    ]
+    assert edge1_points == expected1
+
+    edge2 = Edge(Point(0, 0), Point(2, 0))
+    edge2_points = edge2.get_points()
+    expected2 = [
+        Point(0, 0),
+        Point(1, 0),
+        Point(2, 0),
+    ]
+    assert edge2_points == expected2
+

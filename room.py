@@ -29,8 +29,14 @@ class Room:
         edges.append(Edge(self.points[-1], self.points[0]))
         return edges
 
-    # def intersects(self, other):
-    #     """ Return whether this room intersects with other """
+    def intersects(self, other):
+        """ Return whether this room intersects with other """
+        for edge in other.get_edges():
+            for point in edge.get_points():
+                if self.inside(point):
+                    return True
+
+        return False
 
     def inside(self, point):
         """
@@ -46,7 +52,9 @@ class Room:
         }
         edges = self.get_edges()
         for edge in edges:
-            if edge.is_above(point):
+            if edge.is_inside(point):
+                return False
+            elif edge.is_above(point):
                 side_checker['above'] += 1
             elif edge.is_below(point):
                 side_checker['below'] += 1

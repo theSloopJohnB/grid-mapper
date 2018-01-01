@@ -11,6 +11,16 @@ class Edge:
     def __eq__(self, other):
         return self.start == other.start and self.end == other.end
 
+    def get_points(self):
+        if self.is_vertical():
+            higher = max(self.start.y, self.end.y)
+            lower = min(self.start.y, self.end.y)
+            return [Point(self.start.x, y) for y in range(lower, higher + 1)]
+
+        higher = max(self.start.x, self.end.x)
+        lower = min(self.start.x, self.end.x)
+        return [Point(x, self.start.y) for x in range(lower, higher + 1)]
+
     def is_vertical(self):
         return self.start.x == self.end.x
 
@@ -36,12 +46,16 @@ class Edge:
         return self.is_horizontal() and self.is_between_x(point) and self.start.y > point.y
 
     def is_left(self, point):
-        """ If the edge is to the left of the point"""
+        """ If the edge is to the left of the point """
         return self.is_vertical() and self.is_between_y(point) and self.start.x < point.x
 
     def is_right(self, point):
-        """ If the edge is to the right of the point"""
+        """ If the edge is to the right of the point """
         return self.is_vertical() and self.is_between_y(point) and self.start.x > point.x
+
+    def is_inside(self, point):
+        """ If the point is somewhere on the line """
+        return self.is_between_x(point) and self.is_between_y(point)
 
     def shares_space(self, other):
         """ Whether this and other share space. Assumes horizontal and vertical lines only """
