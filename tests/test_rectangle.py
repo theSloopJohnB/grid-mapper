@@ -1,5 +1,5 @@
 from nose.tools import *
-from rectangle import *
+from gridmapper.model.rectangle import *
 
 
 def valid_room_test():

@@ -1,4 +1,4 @@
-from house import *
+from gridmapper.model.house import *
 from nose.tools import *
 
 def get_rectangles():

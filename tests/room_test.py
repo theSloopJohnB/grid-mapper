@@ -1,4 +1,4 @@
-from room import *
+from gridmapper.model.room import *
 from nose.tools import *
 
 

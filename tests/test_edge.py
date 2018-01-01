@@ -1,6 +1,6 @@
 from nose.tools import *
 
-from edge import *
+from gridmapper.model.edge import *
 
 
 def vertical_edge_test():

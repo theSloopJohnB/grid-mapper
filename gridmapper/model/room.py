@@ -1,4 +1,4 @@
-from rectangle import *
+from gridmapper.model.rectangle import *
 
 class Room:
     def __init__(self):

@@ -1,4 +1,4 @@
-from point import *
+from gridmapper.model.point import *
 
 class Edge:
     def __init__(self, start, end):

@@ -1,6 +1,6 @@
 import itertools
 
-from edge import *
+from gridmapper.model.edge import *
 
 class Rectangle:
     def __init__(self, points):

@@ -1,6 +1,6 @@
 import itertools
 
-from room import *
+from gridmapper.model.room import *
 
 
 class House:
