@@ -54,7 +54,17 @@ def columns_rows_test():
     assert grid.rows_pos == [0, 2, 4]
     assert grid.columns_pos == [0, 1, 2, 3, 4]
 
-# TODO add test for widths
+def width_test():
+    # TODO add test for correct heights and widths
+    assert False
+
+def single_rect_test():
+    # TODO fill this in
+    assert False
+
+def two_rect_test():
+    # TODO fill this in with somethin
+    assert False
 
 def logical_grid_test():
     rects = get_rectangles()

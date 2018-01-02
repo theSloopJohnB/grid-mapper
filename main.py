@@ -5,33 +5,42 @@ from mako import exceptions
 def get_rectangles():
     rect0_points = [
         Point(210, 100),
-        Point(340, 100),
-        Point(340, 200),
-        Point(210, 200),
+        Point(640, 100),
+        Point(640, 400),
+        Point(210, 400),
     ]
     rect0 = Rectangle(rect0_points)
 
     rect1_points = [
-        Point(440, 100),
-        Point(340, 100),
-        Point(340, 200),
-        Point(440, 200),
+        Point(640, 100),
+        Point(740, 100),
+        Point(740, 300),
+        Point(640, 300),
     ]
     rect1 = Rectangle(rect1_points)
+    #
+    # rect2_points = [
+    #     Point(340, 100),
+    #     Point(440, 100),
+    #     Point(440, 200),
+    #     Point(340, 200),
+    # ]
+    # rect2 = Rectangle(rect2_points)
 
-    return [rect0, rect1]
+    return [
+        [rect0],
+        [rect1],
+        # [rect2],
+    ]
 
 def make_grid():
-    rects = get_rectangles()
-    room1 = Room()
-    room1.add_rectangle(rects[0])
-    room1.add_rectangle(rects[1])
-    # room2 = Room()
-    # room2.add_rectangle(rects[2])
-
     grid = Grid()
-    grid.add_room(room1)
-    # grid.add_room(room2)
+    for room in get_rectangles():
+        room1 = Room()
+        for rect in room:
+            room1.add_rectangle(rect)
+        grid.add_room(room1)
+
     return grid
 
 def main():
