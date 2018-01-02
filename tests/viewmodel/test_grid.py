@@ -51,8 +51,10 @@ def columns_rows_test():
     grid.add_room(room1)
     grid.add_room(room2)
 
-    assert grid.rows == [0, 2, 4]
-    assert grid.columns == [0, 1, 2, 3, 4]
+    assert grid.rows_pos == [0, 2, 4]
+    assert grid.columns_pos == [0, 1, 2, 3, 4]
+
+# TODO add test for widths
 
 def logical_grid_test():
     rects = get_rectangles()

@@ -1,0 +1,69 @@
+<%
+def set_class(cell):
+    if cell == -1:
+        return "not-room"
+    return "room"
+%>
+<%def name="makecell(cell)">
+    <div class="${set_class(cell)}">
+      ${cell}
+    </div>
+</%def>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="ISO-8859-1"> 
+    <title>Grid Trial</title>
+    <style>
+      body {
+        background-image: url("house.jpg");
+        background-repeat: no-repeat;
+      }
+
+      .container {
+        display: grid;
+        margin-top: ${data['grid_start_top']}px;
+        margin-left: ${data['grid_start_left']}px;
+        grid-template-columns:
+          % for column in data['columns_width']:
+            ${column}px
+          % endfor
+          ;
+        grid-template-rows:
+          % for row in data['rows_width']:
+            ${row}px
+          % endfor
+          ;
+        grid-gap: 1px;
+        <!-- background-color: #fff; -->
+        color: #444;
+      }
+
+      .not-room {
+        opacity: 0.5;
+        background-color: #144;
+        color: #fff;
+        border-radius: 5px;
+        padding: 20px;
+        font-size: 150%
+      }
+
+      .room {
+        opacity: 0.5;
+        background-color: #844;
+        color: #fff;
+        border-radius: 5px;
+        padding: 20px;
+        font-size: 150%
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      % for cell in data['cells']:
+       ${makecell(cell)}
+      % endfor
+    </div>
+  </body>
+</html> 
